@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     public enum TimeChangeType {Add, Replace};
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -34,10 +35,11 @@ public class PlayerManager : MonoBehaviour
         lightTime = initialLightTime;
         playerState = 0;
         pauseTime = false;
+        
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
@@ -49,20 +51,20 @@ public class PlayerManager : MonoBehaviour
         }
         animator.SetFloat(Speed, movement.magnitude);
 
-        light2D.SetActive(!(GameManager.Instance.IsCaveFinish(playerState) || pauseTime));
+        light2D.SetActive(!(GameManager.instance.IsCaveFinish(playerState) || pauseTime));
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        Vector2 position = rigidbody2d.position;
+        var position = rigidbody2d.position;
         position.x += moveSpeed.x * movement.x * Time.deltaTime;
         position.y += moveSpeed.y * movement.y * Time.deltaTime;
 
         rigidbody2d.MovePosition(position);
 
-        if (GameManager.Instance.IsCaveFinish(playerState) || pauseTime) return;
+        if (GameManager.instance.IsCaveFinish(playerState) || pauseTime) return;
         lightTime -= Time.deltaTime;
-        if(lightTime <= 0) GameManager.Instance.GameEnd();
+        if(lightTime <= 0) GameManager.instance.GameEnd();
     }
 
     public void GetKey(int n)
@@ -89,17 +91,19 @@ public class PlayerManager : MonoBehaviour
 
     public void ChangeLightTime(float d, TimeChangeType t = TimeChangeType.Add)
     {
-        if(t == TimeChangeType.Add)
+        switch (t)
         {
-            if (lightTime + d < 0)
-            {
+            case TimeChangeType.Add when lightTime + d < 0:
                 lightTime = 0;
                 return;
-            }
-            lightTime += d;
-        }else if(t == TimeChangeType.Replace)
-        {
-            lightTime = d;
+            case TimeChangeType.Add:
+                lightTime += d;
+                break;
+            case TimeChangeType.Replace:
+                lightTime = d;
+                break;
+            default:
+                break;
         }
     }
 

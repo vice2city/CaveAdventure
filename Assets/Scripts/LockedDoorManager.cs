@@ -3,37 +3,38 @@ using UnityEngine;
 public class LockedDoorManager : MonoBehaviour
 {
     public int doorID;
-    public GameObject buttonBox;
-
+    
+    private GameObject buttonBox;
     private bool isReady;
     private GameObject player;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        buttonBox = transform.Find("Canvas").Find("Button").gameObject;
         buttonBox.SetActive(false);
         isReady = false;
-        player = GameManager.Instance.GetPlayer();
+        player = GameManager.instance.GetPlayer();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (isReady)
         {
             if (Input.GetKeyDown("e"))
             {
-                int keyCount = player.GetComponent<PlayerManager>().GetKeyCount();
+                var keyCount = player.GetComponent<PlayerManager>().GetKeyCount();
                 if (keyCount <= 0)
                 {
-                    UIManager.instance.createToast("??????");
+                    UIManager.instance.CreateToast("需要钥匙");
                     return;
                 }
-                int keyID = player.GetComponent<PlayerManager>().UseKey();
-                GameManager.Instance.OpenLockedDoor(keyID, doorID);
+                var keyID = player.GetComponent<PlayerManager>().UseKey();
+                GameManager.instance.OpenLockedDoor(keyID, doorID);
                 foreach(var door in GameObject.FindGameObjectsWithTag("LockedDoor"))
                 {
                     if(!door.GetComponent<LockedDoorManager>()) continue;
-                    int id = door.GetComponent<LockedDoorManager>().doorID;
+                    var id = door.GetComponent<LockedDoorManager>().doorID;
                     if (door == this.gameObject) continue;
                     if (doorID == id) Destroy(door);
                 }
@@ -41,25 +42,23 @@ public class LockedDoorManager : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        if(GameManager.Instance.MatchLockedDoor(doorID)) gameObject.SetActive(false);
+        if(GameManager.instance.MatchLockedDoor(doorID)) gameObject.SetActive(false);
     }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        PlayerManager other = collision.GetComponent<PlayerManager>();
 
-        if (other != null)
-        {
-            buttonBox.SetActive(true);
-            isReady = true;
-        }
-    }
-    void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerManager other = collision.GetComponent<PlayerManager>();
-        if (other != null)
-        {
-            buttonBox.SetActive(false);
-            isReady = false;
-        }
+        var other = collision.GetComponent<PlayerManager>();
+
+        if (other == null) return;
+        buttonBox.SetActive(true);
+        isReady = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        var other = collision.GetComponent<PlayerManager>();
+        if (other == null) return;
+        buttonBox.SetActive(false);
+        isReady = false;
     }
 }

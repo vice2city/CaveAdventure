@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6620575157495268325}
   - component: {fileID: 1070194560721799}
   m_Layer: 0
-  m_Name: Point Light 2D
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,8 +237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef0eb36376fb23458a9a953196ee6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonBox: {fileID: 2944910354418846793}
-  light2D: {fileID: 385139751023723083}
   add: 30
   sourceFull: {fileID: 21300000, guid: c80fe69580e0502489c50f9cfdb556d1, type: 2}
   sourceEmpty: {fileID: 21300000, guid: 7503707a69aa58f4681f9d11563eeefd, type: 2}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -19,44 +17,47 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI keyText, lightTimeText, toastText;
     public GameObject toast;
-
-    private bool played;
+    
+    private bool isReady;
+    private int timer1Id;
+    private Timer timer1;
     private void Start()
     {
         toast.SetActive(false);
-        played = false;
+        isReady = keyText!=null && lightTimeText!=null && toast!=null;
+        
     }
     private void Update()
     {
-        if (played)
-        {
-            Invoke("method", 2.0f);
-        }
+        timer1?.Update();
     }
 
-    public void updateKeyText(int n)
+    public void UpdateKeyText(int n)
     {
-        if (keyText == null) return;
+        if (!isReady) return;
         keyText.text = n.ToString();
     }
 
-    public void updateLightTimeText(float n)
+    public void UpdateLightTimeText(float n)
     {
-        if (lightTimeText == null) return;
+        if (!isReady) return;
         lightTimeText.text = n.ToString("N");
     }
 
-    public void createToast(string info)
+    public void CreateToast(string info)
     {
-        if (toast.activeSelf == true) return;
+        if (toast.activeSelf) return;
         toastText.text = info;
         toast.SetActive(true);
-        played = true;
+
+        timer1 = new Timer();
+        timer1.Init();
+        timer1Id = timer1.Schedule(ShutDownToast, 2, 0, 1);
     }
 
-    public void method()
+    private void ShutDownToast()
     {
         toast.SetActive(false);
-        played = false;
+        timer1.Unschedule(timer1Id);
     }
 }

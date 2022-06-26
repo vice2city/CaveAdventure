@@ -3,63 +3,58 @@ using UnityEngine.Serialization;
 
 public class GateEnter : MonoBehaviour
 {
-    [FormerlySerializedAs("GateID")] public int gateID;
-    public GameObject buttonBox;
-    public GameObject tipBox;
+    public int gateID;
     public GameObject destination;
-
+    
+    private GameObject buttonBox;
+    private GameObject tipBox;
+    
     private GameObject player;
     private PlayerManager controller;
     private bool isReady;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        buttonBox = transform.Find("Canvas").Find("Button").gameObject;
+        tipBox = transform.Find("Canvas").Find("Tip").gameObject;
         buttonBox.SetActive(false);
         tipBox.SetActive(false);
         isReady = false;
-        player = GameManager.Instance.GetPlayer();
+        player = GameManager.instance.GetPlayer();
         controller = player.GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (isReady)
+        if (!isReady) return;
+        if (!Input.GetKeyDown("e")) return;
+        player.transform.position = destination.transform.position;
+        controller.ChangePlayerState(gateID);
+        isReady = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        var other = collision.GetComponent<PlayerManager>();
+        if (other == null) return;
+        if (GameManager.instance.IsGateOpen(gateID))
         {
-            if (Input.GetKeyDown("e"))
-            {
-                player.transform.position = destination.transform.position;
-                controller.ChangePlayerState(gateID);
-                isReady = false;
-            }
+            buttonBox.SetActive(true);
+            isReady = true;
+        }
+        else
+        {
+            tipBox.SetActive(true);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        PlayerManager other = collision.GetComponent<PlayerManager>();
-        if (other != null)
-        {
-           if (GameManager.Instance.IsGateOpen(gateID))
-           {
-               buttonBox.SetActive(true);
-               isReady = true;
-           }
-           else
-           {
-               tipBox.SetActive(true);
-           }
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        PlayerManager other = collision.GetComponent<PlayerManager>();
-        if (other != null)
-        {
-            buttonBox.SetActive(false);
-            tipBox.SetActive(false);
-            isReady = false;
-        }
+        var other = collision.GetComponent<PlayerManager>();
+        if (other == null) return;
+        buttonBox.SetActive(false);
+        tipBox.SetActive(false);
+        isReady = false;
     }
 }

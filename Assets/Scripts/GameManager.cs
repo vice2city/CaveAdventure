@@ -5,17 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager instance;
     private void Awake()
     {
-        if (Instance != null)
+        GetPlayer();
+        if (instance != null)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
-        player = GameObject.FindGameObjectWithTag("Player");
-        controller = player.GetComponent<PlayerManager>();
+        instance = this;
         DontDestroyOnLoad(this);
     }
 
@@ -28,30 +27,29 @@ public class GameManager : MonoBehaviour
     private List<int> unlockedDoor;
     private List<int> usedKey;
     private List<int> usedSource;
-
-    private AreaLightManager areaLight;
+    
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {      
         unlockedDoor = new List<int>();
         usedKey = new List<int>();
         usedSource = new List<int>();
-        areaLight = GameObject.FindGameObjectWithTag("AreaLight").GetComponent<AreaLightManager>();
+        UpdateAreaLight();
+        GetPlayer();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         UpdateUI();
-        UpdateAreaLight();
     }
 
     private void UpdateAreaLight()
     {
-        
-        for(int i = 0; i < caveState.Length; i++)
+        foreach (var o in GameObject.FindGameObjectsWithTag("AreaLight"))
         {
-            areaLight.ChangeAreaLightState(i, caveState[i]);
+            var m = o.GetComponent<AreaLightManager>();
+            m.ChangeAreaLightState(caveState[m.caveId]);
         }
     }
 
@@ -59,9 +57,9 @@ public class GameManager : MonoBehaviour
     {
         if (!player) return;
         var keyCount = controller.GetKeyCount();
-        UIManager.instance.updateKeyText(keyCount);
+        UIManager.instance.UpdateKeyText(keyCount);
         var lightTime = controller.GetLightTime();
-        UIManager.instance.updateLightTimeText(lightTime);
+        UIManager.instance.UpdateLightTimeText(lightTime);
     }
 
     public bool IsGateOpen(int n)
@@ -96,6 +94,7 @@ public class GameManager : MonoBehaviour
     public GameObject GetPlayer()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        controller = player.GetComponent<PlayerManager>();
         return player;
     }
 

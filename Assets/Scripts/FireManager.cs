@@ -7,17 +7,15 @@ public class FireManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerManager player = collision.GetComponent<PlayerManager>();
+        var player = collision.GetComponent<PlayerManager>();
 
-        if (player)
-        {
-            bool result1 = GameManager.Instance.OpenGate(caveID+1);
-            bool result2 = GameManager.Instance.FinishCave(caveID);
-            if(result1&&result2) Destroy(gameObject);
-            UIManager.instance.createToast("你获得了"+title);
-            GameObject destination = GameObject.FindGameObjectWithTag("Respawn");
-            player.transform.position = destination.transform.position;
-            player.PauseLightTime(false);
-        }
+        if (!player) return;
+        var result1 = GameManager.instance.OpenGate(caveID+1);
+        var result2 = GameManager.instance.FinishCave(caveID);
+        if(result1&&result2) Destroy(gameObject);
+        UIManager.instance.CreateToast("你获得了"+title);
+        var destination = GameObject.FindGameObjectWithTag("Respawn");
+        player.transform.position = destination.transform.position;
+        player.PauseLightTime(false);
     }
 }

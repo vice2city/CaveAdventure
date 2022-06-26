@@ -1,21 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
+using Image = UnityEngine.UIElements.Image;
 
 public class CheckGateManager : MonoBehaviour
 {
-    public GameObject destination;
     public int checkGateID;
-    public GameObject buttonBox;
 
+    private GameObject destination;
+    private GameObject buttonBox;
     private bool isReady;
     private GameObject player;
     private PlayerManager controller;
     private int sourceGoal;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        destination = transform.Find("Destination").gameObject;
+        buttonBox = transform.Find("Canvas").Find("Button").gameObject;
         buttonBox.SetActive(false);
         isReady = false;
-        player = GameManager.Instance.GetPlayer();
+        player = GameManager.instance.GetPlayer();
         controller = player.GetComponent<PlayerManager>();
         sourceGoal = 0;
         foreach (var source in GameObject.FindGameObjectsWithTag("Source"))
@@ -25,57 +29,48 @@ public class CheckGateManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (isReady)
-        {
-            if (Input.GetKeyDown("e"))
-            {
-                if (CheckAccessible()) OpenGate();
-            }
-        }
+        if (!isReady) return;
+        if (!Input.GetKeyDown("e")) return;
+        if (CheckAccessible()) OpenGate();
     }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        PlayerManager other = collision.GetComponent<PlayerManager>();
 
-        if (other != null)
-        {
-            buttonBox.SetActive(true);
-            isReady = true;
-        }
-    }
-    void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerManager other = collision.GetComponent<PlayerManager>();
-        if (other != null)
-        {
-            buttonBox.SetActive(false);
-            isReady = false;
-        }
+        var other = collision.GetComponent<PlayerManager>();
+
+        if (other == null) return;
+        buttonBox.SetActive(true);
+        isReady = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        var other = collision.GetComponent<PlayerManager>();
+        if (other == null) return;
+        buttonBox.SetActive(false);
+        isReady = false;
     }
 
     private bool CheckAccessible()
     {
-        var timeGoal = GameManager.Instance.GetGoal(checkGateID);
+        var timeGoal = GameManager.instance.GetGoal(checkGateID);
         var surplus = controller.GetLightTime();
         if (timeGoal > surplus)
         {
-            UIManager.instance.createToast("没有足够剩余的燃料");
+            UIManager.instance.CreateToast("没有足够剩余的燃料");
             return false;
         }
-        var count = GameManager.Instance.CountUsedSource(checkGateID);
-        if (sourceGoal > count)
-        {
-            UIManager.instance.createToast("有剩余的燃料罐未打开");
-            return false;
-        }
-        return true;
+        var count = GameManager.instance.CountUsedSource(checkGateID);
+        if (sourceGoal <= count) return true;
+        UIManager.instance.CreateToast("有剩余的燃料罐未打开");
+        return false;
     }
 
     private void OpenGate()
     {
-        float initial = controller.initialLightTime;
+        var initial = controller.initialLightTime;
         controller.ChangeLightTime(initial, PlayerManager.TimeChangeType.Replace);
         player.transform.position = destination.transform.position;
         isReady = false;

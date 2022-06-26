@@ -2,18 +2,10 @@ using UnityEngine;
 
 public class AreaLightManager : MonoBehaviour
 {
-    public GameObject[] areaLight;
-    // Start is called before the first frame update
-    void Start()
-    {
-        foreach (var item in areaLight)
-        {
-            item.SetActive(false);
-        }
-    }
+    public int caveId;
 
-    public void ChangeAreaLightState(int n, bool b)
+    public void ChangeAreaLightState(bool state)
     {
-        areaLight[n].SetActive(b);
+        this.gameObject.SetActive(state);
     }
 }
