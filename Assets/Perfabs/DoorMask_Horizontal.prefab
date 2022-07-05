@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9038295637228150642}
   - component: {fileID: 4734433164843202466}
   m_Layer: 0
-  m_Name: Horizontal
+  m_Name: DoorMask_Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
