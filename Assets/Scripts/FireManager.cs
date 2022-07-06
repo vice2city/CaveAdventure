@@ -10,9 +10,8 @@ public class FireManager : MonoBehaviour
         var player = collision.GetComponent<PlayerManager>();
 
         if (!player) return;
-        var result1 = GameManager.instance.OpenGate(caveID+1);
-        var result2 = GameManager.instance.FinishCave(caveID);
-        if(result1&&result2) Destroy(gameObject);
+        var result = GameManager.instance.FinishCave(caveID);
+        if(result) Destroy(gameObject);
         UIManager.instance.CreateToast("你获得了"+title);
         var destination = GameObject.FindGameObjectWithTag("Respawn");
         player.transform.position = destination.transform.position;
