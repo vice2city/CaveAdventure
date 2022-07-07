@@ -1,56 +1,57 @@
+using System;
 using UnityEngine;
 
 public class LockedDoorManager : MonoBehaviour
 {
-    public int doorID;
-    
-    private GameObject buttonBox;
-    private bool isReady;
     private GameObject player;
+    private PlayerManager controller;
+
+    private Vector2Int doorId;
+    private bool isReady;
     // Start is called before the first frame update
     private void Start()
     {
-        buttonBox = transform.Find("Canvas").Find("Button").gameObject;
-        buttonBox.SetActive(false);
-        isReady = false;
+        var id = gameObject.name.Split(" ")[1].Split("-");
+        doorId.x = Convert.ToInt32(id[0]);
+        doorId.y = Convert.ToInt32(id[1]);
+
         player = GameManager.instance.GetPlayer();
+        controller = player.GetComponent<PlayerManager>();
+        
+        isReady = false;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (isReady)
+        if (GameManager.instance.MatchLockedDoor(doorId)) Destroy(gameObject);
+        if (!isReady) return;
+        if (Input.GetKeyDown("e"))
         {
-            if (Input.GetKeyDown("e"))
-            {
-                var keyCount = player.GetComponent<PlayerManager>().GetKeyCount();
-                if (keyCount <= 0)
-                {
-                    UIManager.instance.CreateToast("需要钥匙");
-                    return;
-                }
-                var keyID = player.GetComponent<PlayerManager>().UseKey();
-                GameManager.instance.OpenLockedDoor(keyID, doorID);
-                foreach(var door in GameObject.FindGameObjectsWithTag("LockedDoor"))
-                {
-                    if(!door.GetComponent<LockedDoorManager>()) continue;
-                    var id = door.GetComponent<LockedDoorManager>().doorID;
-                    if (door == this.gameObject) continue;
-                    if (doorID == id) Destroy(door);
-                }
-                isReady = false;
-                Destroy(gameObject);
-            }
+            OpenDoor();
         }
-        if(GameManager.instance.MatchLockedDoor(doorID)) gameObject.SetActive(false);
+    }
+
+    private void OpenDoor()
+    {
+        var keyCount = controller.GetKeyCount();
+        if (keyCount <= 0)
+        {
+            UIManager.instance.CreateToast("需要钥匙");
+            return;
+        }
+        var keyID = controller.UseKey();
+        GameManager.instance.OpenLockedDoor(keyID, doorId);
+                
+        isReady = false;
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var other = collision.GetComponent<PlayerManager>();
-
         if (other == null) return;
-        buttonBox.SetActive(true);
+        controller.ShowKeyboardToast();
         isReady = true;
     }
 
@@ -58,7 +59,7 @@ public class LockedDoorManager : MonoBehaviour
     {
         var other = collision.GetComponent<PlayerManager>();
         if (other == null) return;
-        buttonBox.SetActive(false);
+        controller.ShutKeyboardToast();
         isReady = false;
     }
 }

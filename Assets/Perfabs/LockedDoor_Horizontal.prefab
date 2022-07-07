@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4958079582376404591
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5050680073234945830, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Name
+      value: LockedDoor 3-1-0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945849, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.285
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945849, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.827
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945852, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9298401
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945852, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945852, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.31632996
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945852, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945852, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.5625
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945852, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073234945853, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -576263422, guid: 6942d02623e72ba41ac6507dd8539513, type: 3}
+    - target: {fileID: 5050680073475697832, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Name
+      value: LockedDoor 3-1-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697835, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697835, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.819
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697838, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9554901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697838, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697838, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.30350494
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697838, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697838, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.5625
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697838, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5050680073475697839, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -636866143, guid: 6942d02623e72ba41ac6507dd8539513, type: 3}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -43.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 20.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.2054203
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132864234439225533, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975951658714465409, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Size.x
+      value: 3.5996132
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975951658714465409, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975951658714465409, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Offset.x
+      value: -1.1399937
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975951658714465409, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Offset.y
+      value: -1.3104591
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975951658714465409, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975951658714465423, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
+      propertyPath: m_Name
+      value: LockedDoor 3-1 Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}

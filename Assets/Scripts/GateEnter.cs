@@ -5,9 +5,6 @@ public class GateEnter : MonoBehaviour
 {
     public GameObject destination;
     
-    private GameObject buttonBox;
-    private GameObject tipBox;
-    
     private GameObject player;
     private PlayerManager controller;
     
@@ -16,10 +13,6 @@ public class GateEnter : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        buttonBox = transform.Find("Canvas").Find("Button").gameObject;
-        tipBox = transform.Find("Canvas").Find("Tip").gameObject;
-        buttonBox.SetActive(false);
-        tipBox.SetActive(false);
         isReady = false;
         player = GameManager.instance.GetPlayer();
         controller = player.GetComponent<PlayerManager>();
@@ -44,12 +37,13 @@ public class GateEnter : MonoBehaviour
         if (other == null) return;
         if (GameManager.instance.IsCaveFinish(destCaveID-1 < 0 ? 0 : destCaveID-1))
         {
-            buttonBox.SetActive(true);
+            controller.ShowKeyboardToast();
             isReady = true;
         }
         else
         {
-            tipBox.SetActive(true);
+            var info = GameManager.instance.fireInfo[destCaveID - 1];
+            UIManager.instance.CreateToast("需要" + info);
         }
     }
 
@@ -57,8 +51,7 @@ public class GateEnter : MonoBehaviour
     {
         var other = collision.GetComponent<PlayerManager>();
         if (other == null) return;
-        buttonBox.SetActive(false);
-        tipBox.SetActive(false);
+        controller.ShutKeyboardToast();
         isReady = false;
     }
 }

@@ -1,13 +1,17 @@
+using System;
 using UnityEngine;
 
 public class FireManager : MonoBehaviour
 {
-    public string title;
-    public int caveID;
-
+    private string title;
+    private int caveID;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var player = collision.GetComponent<PlayerManager>();
+        var id = gameObject.name.Split(" ")[1];
+        caveID = id == null ? 0 : Convert.ToInt32(id);
+        title = GameManager.instance.fireInfo[caveID];
 
         if (!player) return;
         var result = GameManager.instance.FinishCave(caveID);

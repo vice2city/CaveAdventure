@@ -1,30 +1,32 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
-using Image = UnityEngine.UIElements.Image;
 
 public class CheckGateManager : MonoBehaviour
 {
-    public int checkGateID;
-
+    private int caveId;
     private GameObject destination;
-    private GameObject buttonBox;
-    private bool isReady;
+    
     private GameObject player;
     private PlayerManager controller;
+    
+    private bool isReady;
     private int sourceGoal;
     // Start is called before the first frame update
     private void Start()
     {
         destination = transform.Find("Destination").gameObject;
-        buttonBox = transform.Find("Canvas").Find("Button").gameObject;
-        buttonBox.SetActive(false);
+        var id = gameObject.name.Split(" ")[1];
+        caveId = Convert.ToInt32(id);
+        
         isReady = false;
         player = GameManager.instance.GetPlayer();
         controller = player.GetComponent<PlayerManager>();
         sourceGoal = 0;
         foreach (var source in GameObject.FindGameObjectsWithTag("Source"))
         {
-            if (source.GetComponent<SourceManager>().caveId == checkGateID) sourceGoal++;
+            var sourceId = source.name.Split(" ")[1].ToCharArray();
+            var sourceCaveId = Convert.ToInt32(sourceId[0]);
+            if (sourceCaveId == caveId) sourceGoal++;
         }
     }
 
@@ -41,7 +43,7 @@ public class CheckGateManager : MonoBehaviour
         var other = collision.GetComponent<PlayerManager>();
 
         if (other == null) return;
-        buttonBox.SetActive(true);
+        controller.ShowKeyboardToast();
         isReady = true;
     }
 
@@ -49,20 +51,20 @@ public class CheckGateManager : MonoBehaviour
     {
         var other = collision.GetComponent<PlayerManager>();
         if (other == null) return;
-        buttonBox.SetActive(false);
+        controller.ShutKeyboardToast();
         isReady = false;
     }
 
     private bool CheckAccessible()
     {
-        var timeGoal = GameManager.instance.GetGoal(checkGateID);
+        var timeGoal = GameManager.instance.GetGoal(caveId);
         var surplus = controller.GetLightTime();
         if (timeGoal > surplus)
         {
             UIManager.instance.CreateToast("没有足够剩余的燃料");
             return false;
         }
-        var count = GameManager.instance.CountUsedSource(checkGateID);
+        var count = GameManager.instance.CountUsedSource(caveId);
         if (sourceGoal <= count) return true;
         UIManager.instance.CreateToast("有剩余的燃料罐未打开");
         return false;

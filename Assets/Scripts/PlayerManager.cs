@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -17,10 +17,12 @@ public class PlayerManager : MonoBehaviour
     private int playerState;
     private float lightTime;
     private bool pauseTime;
-    private Queue<int> obtainedKey;
+    private Queue<Vector2Int> obtainedKey;
     private static readonly int MoveX = Animator.StringToHash("moveX");
     private static readonly int MoveY = Animator.StringToHash("moveY");
     private static readonly int Speed = Animator.StringToHash("speed");
+
+    private GameObject keyboardToast;
 
     public enum TimeChangeType {Add, Replace};
 
@@ -29,13 +31,14 @@ public class PlayerManager : MonoBehaviour
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        obtainedKey = new Queue<int>();
+        obtainedKey = new Queue<Vector2Int>();
+        keyboardToast = transform.Find("keyboardToast").gameObject;
 
         keyCount = 0;
         lightTime = initialLightTime;
         playerState = 0;
         pauseTime = false;
-        
+        keyboardToast.SetActive(false);
     }
 
     // Update is called once per frame
@@ -67,13 +70,13 @@ public class PlayerManager : MonoBehaviour
         if(lightTime <= 0) GameManager.instance.GameEnd();
     }
 
-    public void GetKey(int n)
+    public void GetKey(Vector2Int n)
     {
         obtainedKey.Enqueue(n);
         keyCount = obtainedKey.Count;
     }
 
-    public int UseKey()
+    public Vector2Int UseKey()
     {
         keyCount = obtainedKey.Count-1;
         return obtainedKey.Dequeue();
@@ -120,5 +123,17 @@ public class PlayerManager : MonoBehaviour
     public void PauseLightTime(bool b)
     {
         pauseTime = b;
+    }
+
+    public void ShowKeyboardToast(string key = "E")
+    {
+        var text = keyboardToast.transform.Find("Button").Find("Text").gameObject;
+        text.GetComponent<TextMeshProUGUI>().text = key;
+        keyboardToast.SetActive(true);
+    }
+    
+    public void ShutKeyboardToast()
+    {
+        keyboardToast.SetActive(false);
     }
 }

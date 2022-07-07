@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         GetPlayer();
-        _areaLights = GameObject.FindGameObjectsWithTag("AreaLight");
         if (instance != null)
         {
             Destroy(gameObject);
@@ -21,20 +20,20 @@ public class GameManager : MonoBehaviour
     }
 
     public float[] checkGateGoal;       //打开检查门需要的燃料量
-    public bool[] caveState;            //对应洞穴的打开状态
+    public bool[] caveState;           //对应洞穴的打开状态
+    public string[] fireInfo;       //火焰名称，用于UI显示
     
     private GameObject player;          //Player实例
     private PlayerManager controller;   //PlayerManager实例
-    private List<int> unlockedDoor;     //上锁的门id列表
-    private List<int> usedKey;          //使用过的钥匙id列表
-    private List<int> usedSource;       //使用过的燃料罐id列表
-    private static GameObject[] _areaLights;    //区域灯光实例列表
 
+    private List<Vector2Int> unlockedDoor;     //已开锁的门id列表
+    private List<Vector2Int> usedKey;          //使用过的钥匙id列表
+    private List<int> usedSource;       //使用过的燃料罐id列表
     // Start is called before the first frame update
     private void Start()
     {      
-        unlockedDoor = new List<int>();
-        usedKey = new List<int>();
+        unlockedDoor = new List<Vector2Int>();
+        usedKey = new List<Vector2Int>();
         usedSource = new List<int>();
     }
 
@@ -42,18 +41,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateUI();
-        UpdateAreaLight(); 
-    }
-
-    //更新区域灯光状态
-    private void UpdateAreaLight()
-    {
-        foreach (var o in _areaLights)
-        {
-            var id = o.name.Split(" ")[1];
-            var caveId = id == null ? 0 : Convert.ToInt32(id); 
-            o.SetActive(caveState[caveId]);
-        }
     }
 
     //更新主界面UI
@@ -69,7 +56,7 @@ public class GameManager : MonoBehaviour
     //检查洞穴完成情况
     public bool IsCaveFinish(int n)
     {
-        return caveState[n];
+        return n <= caveState.Length && caveState[n];
     }
 
     //完成洞穴
@@ -101,19 +88,19 @@ public class GameManager : MonoBehaviour
     }
 
     //匹配钥匙
-    public bool MatchKey(int n)
+    public bool MatchKey(Vector2Int n)
     {
         return usedKey.Contains(n);
     }
 
     //匹配锁上的门
-    public bool MatchLockedDoor(int n)
+    public bool MatchLockedDoor(Vector2Int n)
     {
         return unlockedDoor.Contains(n);
     }
 
     //打开门锁
-    public void OpenLockedDoor(int keyId, int doorId)
+    public void OpenLockedDoor(Vector2Int keyId, Vector2Int doorId)
     {
         usedKey.Add(keyId);
         unlockedDoor.Add(doorId);

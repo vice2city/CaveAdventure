@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SourceManager : MonoBehaviour
@@ -5,27 +6,29 @@ public class SourceManager : MonoBehaviour
     public float add;
     public Sprite sourceFull;
     public Sprite sourceEmpty;
-    public int caveId;
-
-    private GameObject buttonBox;
+    
     private GameObject light2D;
     private GameObject player;
     private PlayerManager controller;
     private SpriteRenderer image;
+    
     private bool isReady;
     private bool isOpen;
+    private int caveId;
+    
     // Start is called before the first frame update
     private void Start()
     {
-        buttonBox = transform.Find("Canvas").Find("Button").gameObject;
         light2D = transform.Find("Light").gameObject;
-        buttonBox.SetActive(false);
         image = this.GetComponent<SpriteRenderer>();
         light2D.SetActive(true);
-        isReady = false;
-        isOpen = true;
         player = GameManager.instance.GetPlayer();
         controller = player.GetComponent<PlayerManager>();
+
+        var id = gameObject.name.Split(" ")[1].Split("-")[0];
+        caveId = Convert.ToInt32(id);
+        isReady = false;
+        isOpen = true;
         image.sprite = sourceFull;
     }
 
@@ -47,7 +50,7 @@ public class SourceManager : MonoBehaviour
         if (other == null) return;
         if (!isOpen) return;
         isReady = true;
-        buttonBox.SetActive(true);
+        controller.ShowKeyboardToast();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -55,7 +58,7 @@ public class SourceManager : MonoBehaviour
         var other = collision.GetComponent<PlayerManager>();
         if (other == null) return;
         isReady = false;
-        buttonBox.SetActive(false);
+        controller.ShutKeyboardToast();
     }
 
     private void ShutDownSource()
@@ -63,7 +66,7 @@ public class SourceManager : MonoBehaviour
         isOpen = false;
         isReady = false;
         light2D.SetActive(false);
-        buttonBox.SetActive(false);
+        controller.ShutKeyboardToast();
         image.sprite = sourceEmpty;
     }
 
