@@ -42,7 +42,7 @@ public class GateEnter : MonoBehaviour
         }
         else
         {
-            var info = GameManager.instance.fireInfo[destCaveID - 1];
+            var info = GameManager.instance.caveInstance[destCaveID - 1].fireInfo;
             UIManager.instance.CreateToast("需要" + info);
         }
     }

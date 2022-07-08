@@ -19,21 +19,20 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public float[] checkGateGoal;       //打开检查门需要的燃料量
+    public CaveManager[] caveInstance;
+    
     public bool[] caveState;           //对应洞穴的打开状态
-    public string[] fireInfo;       //火焰名称，用于UI显示
+    public List<Vector2Int> unlockedDoor;     //已开锁的门id列表
+    public List<Vector2Int> usedKey;          //使用过的钥匙id列表
+    
+    private List<int> usedSource;       //使用过的燃料罐id列表
     
     private GameObject player;          //Player实例
     private PlayerManager controller;   //PlayerManager实例
-
-    private List<Vector2Int> unlockedDoor;     //已开锁的门id列表
-    private List<Vector2Int> usedKey;          //使用过的钥匙id列表
-    private List<int> usedSource;       //使用过的燃料罐id列表
+    
     // Start is called before the first frame update
     private void Start()
-    {      
-        unlockedDoor = new List<Vector2Int>();
-        usedKey = new List<Vector2Int>();
+    {
         usedSource = new List<int>();
     }
 
@@ -81,12 +80,6 @@ public class GameManager : MonoBehaviour
         return player;
     }
 
-    //获取检查门开启条件
-    public float GetGoal(int n)
-    {
-        return checkGateGoal[n];
-    }
-
     //匹配钥匙
     public bool MatchKey(Vector2Int n)
     {
@@ -116,5 +109,13 @@ public class GameManager : MonoBehaviour
     public int CountUsedSource(int caveId)
     {
         return usedSource.Count(i => i==caveId);
+    }
+
+    public void LoadGameData(GameProcess data)
+    {
+        caveState = data.caveState;
+        unlockedDoor = data.unlockedDoor;
+        usedKey = data.usedKey;
+        GameEnd();
     }
 }

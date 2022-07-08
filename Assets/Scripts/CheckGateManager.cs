@@ -24,8 +24,8 @@ public class CheckGateManager : MonoBehaviour
         sourceGoal = 0;
         foreach (var source in GameObject.FindGameObjectsWithTag("Source"))
         {
-            var sourceId = source.name.Split(" ")[1].ToCharArray();
-            var sourceCaveId = Convert.ToInt32(sourceId[0]);
+            var sourceId = gameObject.name.Split(" ")[1].Split("-")[0];
+            var sourceCaveId = Convert.ToInt32(sourceId);
             if (sourceCaveId == caveId) sourceGoal++;
         }
     }
@@ -41,7 +41,6 @@ public class CheckGateManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var other = collision.GetComponent<PlayerManager>();
-
         if (other == null) return;
         controller.ShowKeyboardToast();
         isReady = true;
@@ -57,7 +56,7 @@ public class CheckGateManager : MonoBehaviour
 
     private bool CheckAccessible()
     {
-        var timeGoal = GameManager.instance.GetGoal(caveId);
+        var timeGoal = GameManager.instance.caveInstance[caveId].caveGoal;
         var surplus = controller.GetLightTime();
         if (timeGoal > surplus)
         {
