@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         usedSource = new List<int>();
+        if (!GameSettings.instance.isNeedLoadData) return;
+        GameObject.Find("DataManager").GetComponent<DataManager>().LoadGameData();
+        GameSettings.instance.isNeedLoadData = false;
     }
 
     // Update is called once per frame
@@ -116,6 +119,5 @@ public class GameManager : MonoBehaviour
         caveState = data.caveState;
         unlockedDoor = data.unlockedDoor;
         usedKey = data.usedKey;
-        GameEnd();
     }
 }
