@@ -29,12 +29,12 @@ public class GameManager : MonoBehaviour
     
     private GameObject player;          //Player实例
     private PlayerManager controller;   //PlayerManager实例
-    
+
     // Start is called before the first frame update
     private void Start()
     {
         usedSource = new List<int>();
-        if (!GameSettings.instance.isNeedLoadData) return;
+        if (GameSettings.instance == null || !GameSettings.instance.isNeedLoadData) return;
         GameObject.Find("DataManager").GetComponent<DataManager>().LoadGameData();
         GameSettings.instance.isNeedLoadData = false;
     }
@@ -70,7 +70,13 @@ public class GameManager : MonoBehaviour
     }
 
     //游戏回合结束
-    public void GameEnd()
+    public void GameOver()
+    {
+        UIManager.instance.OpenCover();
+        UIManager.instance.OpenGameOverPanel();
+    }
+
+    public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -119,5 +125,10 @@ public class GameManager : MonoBehaviour
         caveState = data.caveState;
         unlockedDoor = data.unlockedDoor;
         usedKey = data.usedKey;
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

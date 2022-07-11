@@ -67,7 +67,10 @@ public class PlayerManager : MonoBehaviour
 
         if (GameManager.instance.IsCaveFinish(playerState) || pauseTime) return;
         lightTime -= Time.deltaTime;
-        if(lightTime <= 0) GameManager.instance.GameEnd();
+        if (lightTime > 0) return;
+        lightTime = 0.0f;
+        PauseLightTime(true);
+        GameManager.instance.GameOver();
     }
 
     public void GetKey(Vector2Int n)

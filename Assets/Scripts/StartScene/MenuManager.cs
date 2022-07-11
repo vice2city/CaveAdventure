@@ -1,28 +1,27 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public Animator coverAnim;
+    private static readonly int IsFadeOut = Animator.StringToHash("isFadeOut");
+
     private void Start()
     {
-        var cover = transform.Find("Cover").gameObject;
-        cover.SetActive(false);
         if(GameManager.instance != null) Destroy(GameManager.instance.gameObject);
         if(UIManager.instance != null) Destroy(UIManager.instance.gameObject);
     }
 
     public void StartGame()
     {
-        PlayTransition();
+        StartCoroutine(LoadScene());
     }
 
     public void LoadGame()
     {
         GameSettings.instance.isNeedLoadData = true;
-        PlayTransition();
+        StartCoroutine(LoadScene());
     }
 
     public void QuitGame()
@@ -30,16 +29,12 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadScene()
+    private IEnumerator LoadScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
+        coverAnim.SetBool(IsFadeOut, true);
 
-    private void PlayTransition()
-    {
-        var cover = transform.Find("Cover").gameObject;
-        cover.SetActive(true);
-        var coverAnim = gameObject.GetComponent<Animation>();
-        coverAnim.Play();
+        yield return new WaitForSeconds(2);
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
