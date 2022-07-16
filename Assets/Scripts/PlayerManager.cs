@@ -13,7 +13,6 @@ public class PlayerManager : MonoBehaviour
 
     private Vector2 movement;
     private int keyCount;
-
     private int playerState;
     private float lightTime;
     private bool pauseTime;
@@ -44,6 +43,7 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (GameManager.instance.IsGamePause()) return;
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
 
@@ -59,6 +59,8 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.instance.IsGamePause()) return;
+        
         var position = rigidbody2d.position;
         position.x += moveSpeed.x * movement.x * Time.deltaTime;
         position.y += moveSpeed.y * movement.y * Time.deltaTime;

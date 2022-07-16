@@ -10,4 +10,5 @@ public class CaveManager : ScriptableObject
     public Color caveColor;
     public string fireInfo;
     public int caveGoal;
+    public int sourceGoal;
 }

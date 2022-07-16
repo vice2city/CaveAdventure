@@ -20,24 +20,36 @@ public class UIManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this);
     }
-
-    public TextMeshProUGUI keyText, lightTimeText, toastText;
-    public GameObject toast, gameOverPanel, pauseMenu;
-    public Animator coverAnim;
-
-    private bool isReady;
-    private bool pauseMenuIsOpen = false;
-    private int timer1Id;
-    private Timer timer1;
+    
+    public float sliderMaxValue;
+    public GameObject toast;
+    
+    private TextMeshProUGUI keyText, lightTimeText;
+    private GameObject gameOverPanel, pauseMenu, toastInstance;
+    private RectTransform lightTimeSlider, lightTimeGoalHandle;
+    private Animator coverAnim;
     private PlayerManager controller; 
     private static readonly int IsFadeOut = Animator.StringToHash("isFadeOut");
 
     private void Start()
     {
-        isReady = keyText!=null && lightTimeText!=null && toast!=null;
+        //注册组件变量
+        gameOverPanel = transform.Find("GameOverPanel").gameObject;
+        pauseMenu = transform.Find("PauseMenu").gameObject;
+        
+        controller = GameManager.instance.GetPlayer().GetComponent<PlayerManager>();
+        
+        keyText = transform.Find("KeyCount").Find("KeyText").GetComponent<TextMeshProUGUI>();
+        lightTimeText = transform.Find("TimeCount").Find("LightTimeText").GetComponent<TextMeshProUGUI>();
+
+        lightTimeSlider = transform.Find("TimeCount").Find("TimeSlider").Find("Fill").GetComponent<RectTransform>();
+        lightTimeGoalHandle = transform.Find("TimeCount").Find("TimeSlider").Find("Goal").GetComponent<RectTransform>();
+
+        coverAnim = transform.Find("Cover").GetComponent<Animator>();
+        //初始化组件状态
         gameOverPanel.SetActive(false);
         pauseMenu.SetActive(false);
-        controller = GameManager.instance.GetPlayer().GetComponent<PlayerManager>();
+        lightTimeGoalHandle.gameObject.SetActive(false);
         
         //Add listener to pause menu
         var button1 = pauseMenu.transform.Find("Panel").Find("Resume").GetComponent<Button>();
@@ -56,10 +68,11 @@ public class UIManager : MonoBehaviour
     
     private void Update()
     {
-        timer1?.Update();
+        if (GameManager.instance.IsGamePause()) return;
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
-        if (!pauseMenuIsOpen) OpenPauseMenu();
+        if (!pauseMenu.activeSelf) OpenPauseMenu();
         else ClosePauseMenu();
+
     }
 
     private void SceneIsLoaded()
@@ -69,37 +82,40 @@ public class UIManager : MonoBehaviour
         coverAnim.gameObject.SetActive(true);
         gameOverPanel.SetActive(false);
         pauseMenu.SetActive(false);
-        pauseMenuIsOpen = false;
     }
 
     public void UpdateKeyText(int n)
     {
-        if (!isReady) return;
         keyText.text = n.ToString();
     }
 
-    public void UpdateLightTimeText(float n)
+    public void UpdateLightTime(float n)
     {
-        if (!isReady) return;
         lightTimeText.text = n.ToString("N");
+        var scale = n > sliderMaxValue ? 1 : n / sliderMaxValue;
+        lightTimeSlider.sizeDelta = new Vector2(scale * 1000, 10);
+    }
+
+    public void UpdateGoalHandle(float goal)
+    {
+        if (goal == 0f)
+        {
+            lightTimeGoalHandle.gameObject.SetActive(false);
+        }
+        else
+        {
+            var scale = goal / sliderMaxValue;
+            lightTimeGoalHandle.sizeDelta = new Vector2(scale *1000, 10);
+            lightTimeGoalHandle.gameObject.SetActive(true);
+        }
     }
 
     //Toast
     public void CreateToast(string info)
     {
-        if (toast.activeSelf) return;
-        toastText.text = info;
-        toast.SetActive(true);
-
-        timer1 = new Timer();
-        timer1.Init();
-        timer1Id = timer1.Schedule(ShutDownToast, 2, 0, 1);
-    }
-    
-    private void ShutDownToast()
-    {
-        toast.SetActive(false);
-        timer1.Unschedule(timer1Id);
+        if(toastInstance) return;
+        toastInstance = Instantiate(toast, transform);
+        toastInstance.GetComponent<ToastManager>().ChangeToastInfo(info);
     }
 
     public void OpenCover()
@@ -111,13 +127,13 @@ public class UIManager : MonoBehaviour
     {
         gameOverPanel.transform.localScale = new Vector3(1, 0, 1);
         gameOverPanel.SetActive(true);
-        var tween = gameOverPanel.transform.DOScaleY(1, 0.5f);
+        var tween = gameOverPanel.transform.DOScaleY(1, 0.2f);
         tween.SetAutoKill(true);
     }
 
     public void CloseGameOverPanel()
     {
-        var tween = gameOverPanel.transform.DOScaleY(0, 0.5f);
+        var tween = gameOverPanel.transform.DOScaleY(0, 0.2f);
         tween.OnComplete(GameManager.instance.ReloadScene);
         tween.SetAutoKill(true);
     }
@@ -125,22 +141,18 @@ public class UIManager : MonoBehaviour
     //Pause Menu
     private void OpenPauseMenu()
     {
+        GameManager.instance.GamePause(true);
         pauseMenu.SetActive(true);
-        pauseMenuIsOpen = true;
-        Time.timeScale = 0f;
     }
 
     private void ClosePauseMenu()
     {
+        GameManager.instance.GamePause(false);
         pauseMenu.SetActive(false);
-        pauseMenuIsOpen = false;
-        Time.timeScale = 1f;
     }
     
     private IEnumerator ReLoadScene()
     {
-        controller.PauseLightTime(true);
-        Time.timeScale = 1f;
         coverAnim.SetBool(IsFadeOut, true);
         
         yield return new WaitForSeconds(2);
@@ -149,12 +161,13 @@ public class UIManager : MonoBehaviour
     
     private IEnumerator BackToMainMenu()
     {
-        controller.PauseLightTime(true);
-        Time.timeScale = 1f;
         coverAnim.SetBool(IsFadeOut, true);
 
         yield return new WaitForSeconds(2);
-        GameManager.instance.BackToMainMenu();
+        GameManager.instance.LoadScene(0);
     }
-
+    
+    //todo word on wall ui
+    //todo new scene: mind , with scripts & performance
+    //todo puzzle
 }

@@ -17,3 +17,4 @@ MonoBehaviour:
   caveColor: {r: 0, g: 0, b: 0, a: 0}
   fireInfo: "\u65E0"
   caveGoal: 10
+  sourceGoal: 3

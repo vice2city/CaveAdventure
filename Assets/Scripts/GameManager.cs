@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public List<Vector2Int> usedKey;          //使用过的钥匙id列表
     
     private List<int> usedSource;       //使用过的燃料罐id列表
+    private bool isGamePause;
     
     private GameObject player;          //Player实例
     private PlayerManager controller;   //PlayerManager实例
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         usedSource = new List<int>();
+        isGamePause = false;
         if (GameSettings.instance == null || !GameSettings.instance.isNeedLoadData) return;
         GameObject.Find("DataManager").GetComponent<DataManager>().LoadGameData();
         GameSettings.instance.isNeedLoadData = false;
@@ -52,7 +54,7 @@ public class GameManager : MonoBehaviour
         var keyCount = controller.GetKeyCount();
         UIManager.instance.UpdateKeyText(keyCount);
         var lightTime = controller.GetLightTime();
-        UIManager.instance.UpdateLightTimeText(lightTime);
+        UIManager.instance.UpdateLightTime(lightTime);
     }
 
     //检查洞穴完成情况
@@ -127,8 +129,18 @@ public class GameManager : MonoBehaviour
         usedKey = data.usedKey;
     }
 
-    public void BackToMainMenu()
+    public void LoadScene(int index)
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(index);
+    }
+
+    public void GamePause(bool b)
+    {
+        isGamePause = b;
+    }
+
+    public bool IsGamePause()
+    {
+        return isGamePause;
     }
 }

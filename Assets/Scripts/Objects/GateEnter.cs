@@ -26,25 +26,25 @@ public class GateEnter : MonoBehaviour
     {
         if (!isReady) return;
         if (!Input.GetKeyDown("e")) return;
-        player.transform.position = destination.transform.position;
-        controller.ChangePlayerState(destCaveID);
-        isReady = false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        var other = collision.GetComponent<PlayerManager>();
-        if (other == null) return;
-        if (GameManager.instance.IsCaveFinish(destCaveID-1 < 0 ? 0 : destCaveID-1))
+        if (GameManager.instance.IsCaveFinish(destCaveID - 1 < 0 ? 0 : destCaveID - 1))
         {
-            controller.ShowKeyboardToast();
-            isReady = true;
+            player.transform.position = destination.transform.position;
+            controller.ChangePlayerState(destCaveID);
+            isReady = false;
         }
         else
         {
             var info = GameManager.instance.caveInstance[destCaveID - 1].fireInfo;
             UIManager.instance.CreateToast("需要" + info);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        var other = collision.GetComponent<PlayerManager>();
+        if (other == null) return;
+        isReady = true;
+        controller.ShowKeyboardToast();
     }
 
     private void OnTriggerExit2D(Collider2D collision)

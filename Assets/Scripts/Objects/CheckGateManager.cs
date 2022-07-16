@@ -21,13 +21,7 @@ public class CheckGateManager : MonoBehaviour
         isReady = false;
         player = GameManager.instance.GetPlayer();
         controller = player.GetComponent<PlayerManager>();
-        sourceGoal = 0;
-        foreach (var source in GameObject.FindGameObjectsWithTag("Source"))
-        {
-            var sourceId = gameObject.name.Split(" ")[1].Split("-")[0];
-            var sourceCaveId = Convert.ToInt32(sourceId);
-            if (sourceCaveId == caveId) sourceGoal++;
-        }
+        sourceGoal = GameManager.instance.caveInstance[caveId].sourceGoal;
     }
 
     // Update is called once per frame
@@ -60,13 +54,18 @@ public class CheckGateManager : MonoBehaviour
         var surplus = controller.GetLightTime();
         if (timeGoal > surplus)
         {
+            UIManager.instance.UpdateGoalHandle(timeGoal);
             UIManager.instance.CreateToast("没有足够剩余的燃料");
             return false;
         }
         var count = GameManager.instance.CountUsedSource(caveId);
-        if (sourceGoal <= count) return true;
-        UIManager.instance.CreateToast("有剩余的燃料罐未打开");
-        return false;
+        if (sourceGoal > count)
+        {
+            UIManager.instance.CreateToast("有剩余的燃料罐未打开");
+            return false;
+        }
+        UIManager.instance.UpdateGoalHandle(0f);
+        return true;
     }
 
     private void OpenGate()
