@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new cave", menuName = "Data/New Cave")]
+[CreateAssetMenu(fileName = "cave", menuName = "Data/New Cave")]
 public class CaveManager : ScriptableObject
 {
     public int caveId;

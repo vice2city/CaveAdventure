@@ -37,7 +37,7 @@ public class LockedDoorManager : MonoBehaviour
         var keyCount = controller.GetKeyCount();
         if (keyCount <= 0)
         {
-            UIManager.instance.CreateToast("需要钥匙");
+            UIManager.instance.CreateToast("需要钥匙", "打开这扇门需要钥匙");
             return;
         }
         var keyID = controller.UseKey();

@@ -20,7 +20,6 @@ public class DataManager : MonoBehaviour
     {
         RefreshData();
         var dataPath = Application.persistentDataPath + "/game_SaveData";
-        Debug.Log(dataPath);
         if (!Directory.Exists(dataPath))
         {
             Directory.CreateDirectory(dataPath);
@@ -31,6 +30,7 @@ public class DataManager : MonoBehaviour
         var json = JsonUtility.ToJson(process);
         formatter.Serialize(file, json);
         file.Close();
+        Debug.Log("Game data is saved on "+dataPath);
     }
 
     public void LoadGameData()
@@ -44,6 +44,7 @@ public class DataManager : MonoBehaviour
         JsonUtility.FromJsonOverwrite(json.ToString(), process);
         GameManager.instance.LoadGameData(process);
         file.Close();
+        Debug.Log("Game data is loaded with "+dataPath);
     }
 
     private void RefreshData()

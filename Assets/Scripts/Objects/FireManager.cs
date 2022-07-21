@@ -20,7 +20,7 @@ public class FireManager : MonoBehaviour
         var player = collision.GetComponent<PlayerManager>();
         if (!player) return;
         GameManager.instance.FinishCave(caveID);
-        UIManager.instance.CreateToast("你获得了"+title);
+        UIManager.instance.CreateToast("你获得了"+title, "可以开启新的洞穴");
         var destination = GameObject.FindGameObjectWithTag("Respawn");
         player.transform.position = destination.transform.position;
         player.PauseLightTime(false);

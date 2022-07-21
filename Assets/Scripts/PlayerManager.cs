@@ -92,11 +92,6 @@ public class PlayerManager : MonoBehaviour
         playerState = n;
     }
 
-    public int GetPlayerState()
-    {
-        return playerState;
-    }
-
     public void ChangeLightTime(float d, TimeChangeType t = TimeChangeType.Add)
     {
         switch (t)

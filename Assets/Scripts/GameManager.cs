@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public CaveManager[] caveInstance;
     
     public bool[] caveState;           //对应洞穴的打开状态
+    public bool[] skillState;
+    public int spareNum;
+    public List<Vector2Int> openedBox;
     public List<Vector2Int> unlockedDoor;     //已开锁的门id列表
     public List<Vector2Int> usedKey;          //使用过的钥匙id列表
     
@@ -55,6 +58,8 @@ public class GameManager : MonoBehaviour
         UIManager.instance.UpdateKeyText(keyCount);
         var lightTime = controller.GetLightTime();
         UIManager.instance.UpdateLightTime(lightTime);
+        UIManager.instance.UpdateSpareText(spareNum);
+        UIManager.instance.UpdateSkillBoard(skillState);
     }
 
     //检查洞穴完成情况
@@ -81,6 +86,28 @@ public class GameManager : MonoBehaviour
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void LoadGameData(GameProcess data)
+    {
+        caveState = data.caveState;
+        unlockedDoor = data.unlockedDoor;
+        usedKey = data.usedKey;
+    }
+
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+
+    public void GamePause(bool b)
+    {
+        isGamePause = b;
+    }
+
+    public bool IsGamePause()
+    {
+        return isGamePause;
     }
 
     //获取Player实例
@@ -122,25 +149,29 @@ public class GameManager : MonoBehaviour
         return usedSource.Count(i => i==caveId);
     }
 
-    public void LoadGameData(GameProcess data)
+    public void OpenTreasureBox(int skillId, Vector2Int boxId)
     {
-        caveState = data.caveState;
-        unlockedDoor = data.unlockedDoor;
-        usedKey = data.usedKey;
+        openedBox.Add(boxId);
+        if (skillId >= 0) skillState[skillId] = true;
+        else spareNum++;
     }
 
-    public void LoadScene(int index)
+    public bool IsBoxOpened(Vector2Int boxId)
     {
-        SceneManager.LoadScene(index);
+        return openedBox.Contains(boxId);
+    }
+    
+    public bool IsSkillObtained(int skillId)
+    {
+        if (skillId < 0) return false;
+        return skillState[skillId];
+    }
+    
+    public bool UseSpare()
+    {
+        if (spareNum <= 0) return false;
+        spareNum--;
+        return true;
     }
 
-    public void GamePause(bool b)
-    {
-        isGamePause = b;
-    }
-
-    public bool IsGamePause()
-    {
-        return isGamePause;
-    }
 }

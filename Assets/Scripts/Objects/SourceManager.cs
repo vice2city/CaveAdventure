@@ -11,9 +11,9 @@ public class SourceManager : MonoBehaviour
     private GameObject player;
     private PlayerManager controller;
     private SpriteRenderer image;
-    
+
     private bool isReady;
-    private bool isOpen;
+    private bool isOpened;
     private int caveId;
     
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class SourceManager : MonoBehaviour
         var id = gameObject.name.Split(" ")[1].Split("-")[0];
         caveId = Convert.ToInt32(id);
         isReady = false;
-        isOpen = true;
+        isOpened = false;
         image.sprite = sourceFull;
     }
 
@@ -40,15 +40,15 @@ public class SourceManager : MonoBehaviour
             if (Input.GetKeyDown("e")) GetSource();
         }
 
-        if (!isOpen) return;
+        if (isOpened) return;
         if (GameManager.instance.IsCaveFinish(caveId)) ShutDownSource();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isOpened) return;
         var other = collision.GetComponent<PlayerManager>();
         if (other == null) return;
-        if (!isOpen) return;
         isReady = true;
         controller.ShowKeyboardToast();
     }
@@ -63,15 +63,15 @@ public class SourceManager : MonoBehaviour
 
     private void ShutDownSource()
     {
-        isOpen = false;
+        isOpened = true;
         isReady = false;
         light2D.SetActive(false);
-        controller.ShutKeyboardToast();
         image.sprite = sourceEmpty;
     }
 
     private void GetSource()
     {
+        controller.ShutKeyboardToast();
         controller.ChangeLightTime(add);
         GameManager.instance.GetSource(caveId);
         ShutDownSource();

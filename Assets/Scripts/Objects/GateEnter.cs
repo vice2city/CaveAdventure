@@ -35,7 +35,7 @@ public class GateEnter : MonoBehaviour
         else
         {
             var info = GameManager.instance.caveInstance[destCaveID - 1].fireInfo;
-            UIManager.instance.CreateToast("需要" + info);
+            UIManager.instance.CreateToast("需要" + info, "打开这扇门需要特殊的火焰");
         }
     }
 

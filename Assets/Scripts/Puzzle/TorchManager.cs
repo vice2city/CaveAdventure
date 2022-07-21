@@ -19,7 +19,7 @@ public class TorchManager : MonoBehaviour
     private static readonly int IsLit = Animator.StringToHash("IsLit");
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         light2D = transform.Find("Light").gameObject;
         anim = GetComponent<Animator>();
@@ -32,7 +32,7 @@ public class TorchManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!isReady) return;
         if (Input.GetKeyDown("e")) ChangeTorchState();
@@ -59,5 +59,10 @@ public class TorchManager : MonoBehaviour
         isLit = !isLit;
         light2D.SetActive(isLit);
         anim.SetBool(IsLit, isLit);
+    }
+
+    public bool GetTorchState()
+    {
+        return isLit == isKeyLit;
     }
 }

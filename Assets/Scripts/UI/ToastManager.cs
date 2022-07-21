@@ -1,16 +1,21 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ToastManager : MonoBehaviour
 {
+    private TextMeshProUGUI toastTitle;
     private TextMeshProUGUI toastText;
+    private Image toastImage;
     private Animator toastAnim;
     private static readonly int IsFadeOut = Animator.StringToHash("isFadeOut");
 
     private void Awake()
     {
-        toastText = transform.Find("ToastText").GetComponent<TextMeshProUGUI>();
+        toastTitle = transform.Find("Title").GetComponent<TextMeshProUGUI>();
+        toastText = transform.Find("Text").GetComponent<TextMeshProUGUI>();
+        toastImage = transform.Find("Image").GetComponent<Image>();
         toastAnim = GetComponent<Animator>();
         GameManager.instance.GamePause(true);
     }
@@ -22,9 +27,15 @@ public class ToastManager : MonoBehaviour
         StartCoroutine(CloseToast());
     }
     
-    public void ChangeToastInfo(string info)
+    public void ChangeToastInfo(string title, string text)
     {
-        toastText.text = info;
+        toastTitle.text = title;
+        toastText.text = text;
+    }
+
+    public void ChangeToastImage(Sprite image)
+    {
+        toastImage.sprite = image;
     }
     
     private IEnumerator CloseToast()
