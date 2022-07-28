@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public CaveManager[] caveInstance;
+    public Cave[] caveInstance;
     
     public bool[] caveState;           //对应洞穴的打开状态
     public bool[] skillState;

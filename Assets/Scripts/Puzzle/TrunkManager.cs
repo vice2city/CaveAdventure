@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class TrunkManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject smoke;
+    public void Destroy()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Instantiate(smoke, transform.position, Quaternion.identity, transform.parent);
+        Destroy(gameObject);
     }
 }

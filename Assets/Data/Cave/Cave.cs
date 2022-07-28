@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "cave", menuName = "Data/New Cave")]
-public class CaveManager : ScriptableObject
+public class Cave : ScriptableObject
 {
     public int caveId;
     public string caveName;

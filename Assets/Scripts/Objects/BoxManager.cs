@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BoxManager : MonoBehaviour
 {
-    public SkillManager item;
+    public Skill item;
     public Sprite openedImage;
     
     private GameObject player;

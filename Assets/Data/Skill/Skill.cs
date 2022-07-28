@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "skill", menuName = "Data/New Skill")]
-public class SkillManager : ScriptableObject
+public class Skill : ScriptableObject
 {
     public int skillId;
     public string skillName;

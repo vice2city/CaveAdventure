@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class TorchPuzzle : MonoBehaviour
 {
-    private SpriteRenderer[] blocks;
+    public GameObject blocks;
+    
+    private SpriteRenderer[] blocksImage;
     private BoxCollider2D[] blocksCoil;
     private TorchManager[] torches;
     
@@ -16,8 +18,8 @@ public class TorchPuzzle : MonoBehaviour
         torches = GetComponentsInChildren<TorchManager>();
         keyGoalNum = torches.Length;
 
-        blocks = transform.Find("Blocks").GetComponentsInChildren<SpriteRenderer>();
-        blocksCoil = transform.Find("Blocks").GetComponentsInChildren<BoxCollider2D>();
+        blocksImage = blocks.GetComponentsInChildren<SpriteRenderer>();
+        blocksCoil = blocks.GetComponentsInChildren<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -31,7 +33,7 @@ public class TorchPuzzle : MonoBehaviour
     //true:close block; false: open block;
     private void ChangeBlockState(bool state)
     {
-        foreach (var block in blocks)
+        foreach (var block in blocksImage)
         {
             block.color = state ? new Color(0.7f, 0.7f, 0.7f) : Color.white;
             block.flipY = state;

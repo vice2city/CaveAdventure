@@ -149,11 +149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8975951658714465409, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8975951658714465423, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
       propertyPath: m_Name
-      value: LockedDoor 3-1 Variant
+      value: LockedDoor_Horizontal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}

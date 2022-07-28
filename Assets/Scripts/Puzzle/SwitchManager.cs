@@ -51,7 +51,7 @@ public class SwitchManager : MonoBehaviour
         controller.ShutKeyboardToast();
     }
     
-    private void ChangeSwitchState()
+    public void ChangeSwitchState()
     {
         isFormer = !isFormer;
         switch (colorGroup)

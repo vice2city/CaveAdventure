@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     
     private void Update()
     {
-        if(toastInstance) return;
+        if (toastInstance) return;
         if (!Input.GetKeyDown(KeyCode.Escape)) return; 
         if (!pauseMenu.activeSelf) OpenPauseMenu();
     }

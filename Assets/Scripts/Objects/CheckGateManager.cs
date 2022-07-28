@@ -61,7 +61,8 @@ public class CheckGateManager : MonoBehaviour
         var count = GameManager.instance.CountUsedSource(caveId);
         if (sourceGoal > count)
         {
-            UIManager.instance.CreateToast("有剩余的燃料罐未打开", "你需要开启洞穴内存在的所有燃料罐");
+            UIManager.instance.CreateToast("有剩余的燃料罐未打开", 
+                "你需要开启洞穴内存在的所有燃料罐<br>还剩" + (sourceGoal - count) + "个");
             return false;
         }
         UIManager.instance.UpdateGoalHandle(0f);

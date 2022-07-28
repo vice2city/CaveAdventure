@@ -1,34 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ButtonPuzzle : MonoBehaviour
 {
-    private SpriteRenderer[] blocks;
+    public GameObject blocks;
+    
+    private SpriteRenderer[] blocksImage;
     private BoxCollider2D[] blocksCoil;
-    private ButtonManager button;
+    private ButtonManager[] buttons;
 
     private bool blockState;
     private void Start()
     {
-        blocks = transform.Find("Blocks").GetComponentsInChildren<SpriteRenderer>();
-        blocksCoil = transform.Find("Blocks").GetComponentsInChildren<BoxCollider2D>();
-        button = transform.Find("Button").GetComponent<ButtonManager>();
+        blocksImage = blocks.GetComponentsInChildren<SpriteRenderer>();
+        blocksCoil = blocks.GetComponentsInChildren<BoxCollider2D>();
+        buttons = GetComponentsInChildren<ButtonManager>();
         blockState = false;
     }
 
     private void Update()
     {
-        if (button.IsButtonPressed() == blockState) return;
-        blockState = button.IsButtonPressed();
+        var result = buttons.All(button => button.IsButtonPressed());
+        if (result == blockState) return;
+        blockState = result;
         ChangeBlockState(blockState);
     }
 
     //true:close block; false: open block;
     private void ChangeBlockState(bool state)
     {
-        foreach (var block in blocks)
+        foreach (var block in blocksImage)
         {
             block.color = state ? new Color(0.7f, 0.7f, 0.7f) : Color.white;
             block.flipY = state;

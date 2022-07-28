@@ -16,6 +16,10 @@ PrefabInstance:
       value: 1.2264419
       objectReference: {fileID: 0}
     - target: {fileID: 9038295637228150642, guid: c61e1d8bb70bdb64b8f073da8bd0169a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.0387344
+      objectReference: {fileID: 0}
+    - target: {fileID: 9038295637228150642, guid: c61e1d8bb70bdb64b8f073da8bd0169a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.442
       objectReference: {fileID: 0}
@@ -57,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9155858760432345839, guid: c61e1d8bb70bdb64b8f073da8bd0169a, type: 3}
       propertyPath: m_Name
-      value: Horizontal (4)
+      value: DoorMask_Horizontal_narrow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c61e1d8bb70bdb64b8f073da8bd0169a, type: 3}

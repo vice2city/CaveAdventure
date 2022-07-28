@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlatePuzzle : MonoBehaviour
 {
+    public GameObject smoke;
+    public GameObject treasure;
     private PlateManager[] plates;
     private int plateGoalNum;
     private int plateNum;
@@ -14,6 +16,7 @@ public class PlatePuzzle : MonoBehaviour
     private void Start()
     {
         isFinished = false;
+        treasure.SetActive(false);
         plates = GetComponentsInChildren<PlateManager>();
         plateGoalNum = plates.Length;
     }
@@ -41,7 +44,10 @@ public class PlatePuzzle : MonoBehaviour
 
     private void FinishPuzzle()
     {
+        if (isFinished) return;
         isFinished = true;
         foreach (var plate in plates) plate.FinishPlate();
+        treasure.SetActive(true);
+        Instantiate(smoke, treasure.transform.position, Quaternion.identity, treasure.transform);
     }
 }
