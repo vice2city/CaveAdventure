@@ -11,4 +11,5 @@ public class Cave : ScriptableObject
     public string fireInfo;
     public int caveGoal;
     public int sourceGoal;
+    public AudioClip caveMusic;
 }

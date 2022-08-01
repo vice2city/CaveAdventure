@@ -45,6 +45,7 @@ public class PlatePuzzle : MonoBehaviour
     private void FinishPuzzle()
     {
         if (isFinished) return;
+        StartCoroutine(AudioManager.instance.PlayPuzzleSolved());
         isFinished = true;
         foreach (var plate in plates) plate.FinishPlate();
         treasure.SetActive(true);

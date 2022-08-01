@@ -46,6 +46,7 @@ public class BoxManager : MonoBehaviour
     private void OpenBox()
     {
         controller.ShutKeyboardToast();
+        AudioManager.instance.PlaySfx(AudioManager.instance.openBox);
         GameManager.instance.OpenTreasureBox(item.skillId, boxId);
         UIManager.instance.CreateToast(item.skillName, item.skillDescription, item.skillImage);
         ShutDownBox();

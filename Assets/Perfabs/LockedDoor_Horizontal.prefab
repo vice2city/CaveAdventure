@@ -147,10 +147,6 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -1.3104591
       objectReference: {fileID: 0}
-    - target: {fileID: 8975951658714465409, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8975951658714465423, guid: 06b6d8c40087a3441b0645c9cc45f82b, type: 3}
       propertyPath: m_Name
       value: LockedDoor_Horizontal

@@ -23,6 +23,7 @@ public class PlateManager : MonoBehaviour
     //true: plate pressed; false:plate back;
     public void ChangePlateState(bool state)
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.pressPlate);
         var block = GetComponent<SpriteRenderer>();
         block.color = state ? new Color(0.7f, 0.7f, 0.7f) : Color.white;
         block.flipY = state;

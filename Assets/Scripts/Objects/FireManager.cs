@@ -23,6 +23,7 @@ public class FireManager : MonoBehaviour
         UIManager.instance.CreateToast("你获得了"+title, "可以开启新的洞穴");
         var destination = GameObject.FindGameObjectWithTag("Respawn");
         player.transform.position = destination.transform.position;
+        player.ChangePlayerState(0);
         player.PauseLightTime(false);
         Destroy(gameObject);
     }

@@ -20,6 +20,7 @@ public class BombManager : MonoBehaviour
 
     private void Boom(Vector2 direction)
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.bombExplode);
         var hit = Physics2D.Raycast(transform.position + (Vector3)direction * 0.5f, direction, 
             range, LayerMask.GetMask("Default"));
         if (!hit) return;

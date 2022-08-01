@@ -72,6 +72,7 @@ public class SourceManager : MonoBehaviour
     private void GetSource()
     {
         controller.ShutKeyboardToast();
+        AudioManager.instance.PlaySfx(AudioManager.instance.getSource);
         controller.ChangeLightTime(add);
         GameManager.instance.GetSource(caveId);
         ShutDownSource();

@@ -8,17 +8,19 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GameProcess
 {
     public bool[] caveState;
+    public bool[] skillState;
+    public int spareNum;
+    public List<Vector2Int> openedBox;
     public List<Vector2Int> unlockedDoor;
     public List<Vector2Int> usedKey;
+    
 }
 
 public class DataManager : MonoBehaviour
 {
-    public GameProcess process = new GameProcess();
-    
     public void SaveGameData()
     {
-        RefreshData();
+        var process = GameManager.instance.GetGameData();
         var dataPath = Application.persistentDataPath + "/game_SaveData";
         if (!Directory.Exists(dataPath))
         {
@@ -35,6 +37,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadGameData()
     {
+        var process = new GameProcess();
         var dataPath = Application.persistentDataPath + "/game_SaveData/GameManager.data";
         if (!File.Exists(dataPath)) return;
         
@@ -45,12 +48,5 @@ public class DataManager : MonoBehaviour
         GameManager.instance.LoadGameData(process);
         file.Close();
         Debug.Log("Game data is loaded with "+dataPath);
-    }
-
-    private void RefreshData()
-    {
-        process.unlockedDoor = GameManager.instance.unlockedDoor;
-        process.usedKey = GameManager.instance.usedKey;
-        process.caveState = GameManager.instance.caveState;
     }
 }

@@ -32,6 +32,7 @@ public class ButtonPuzzle : MonoBehaviour
     //true:close block; false: open block;
     private void ChangeBlockState(bool state)
     {
+        if (state)  StartCoroutine(AudioManager.instance.PlayPuzzleSolved());
         foreach (var block in blocksImage)
         {
             block.color = state ? new Color(0.7f, 0.7f, 0.7f) : Color.white;

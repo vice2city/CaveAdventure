@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         GetPlayer();
         if (instance != null)
         {
+            instance.SceneIsLoaded();
             Destroy(gameObject);
             return;
         }
@@ -23,12 +24,13 @@ public class GameManager : MonoBehaviour
     
     public bool[] caveState;           //对应洞穴的打开状态
     public bool[] skillState;
-    public int spareNum;
-    public List<Vector2Int> openedBox;
-    public List<Vector2Int> unlockedDoor;     //已开锁的门id列表
-    public List<Vector2Int> usedKey;          //使用过的钥匙id列表
+    private int spareNum;
+    private List<Vector2Int> openedBox;
+    private List<Vector2Int> unlockedDoor;     //已开锁的门id列表
+    private List<Vector2Int> usedKey;          //使用过的钥匙id列表
     
     private List<int> usedSource;       //使用过的燃料罐id列表
+    
     private bool isGamePause;
     
     private GameObject player;          //Player实例
@@ -37,6 +39,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        spareNum = 0;
+        openedBox = new List<Vector2Int>();
+        unlockedDoor = new List<Vector2Int>();
+        usedKey = new List<Vector2Int>();
         usedSource = new List<int>();
         isGamePause = false;
         if (GameSettings.instance == null || !GameSettings.instance.isNeedLoadData) return;
@@ -48,6 +54,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateUI();
+    }
+
+    private void SceneIsLoaded()
+    {
+        usedSource = new List<int>();
     }
 
     //更新主界面UI
@@ -87,10 +98,27 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public GameProcess GetGameData()
+    {
+        var process = new GameProcess
+        {
+            caveState = caveState,
+            skillState = skillState,
+            spareNum = spareNum,
+            openedBox = openedBox,
+            unlockedDoor = unlockedDoor,
+            usedKey = usedKey,
+        };
+        return process;
+    }
     
     public void LoadGameData(GameProcess data)
     {
         caveState = data.caveState;
+        skillState = data.skillState;
+        spareNum = data.spareNum;
+        openedBox = data.openedBox;
         unlockedDoor = data.unlockedDoor;
         usedKey = data.usedKey;
     }

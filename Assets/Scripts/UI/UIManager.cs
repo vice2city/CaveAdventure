@@ -110,6 +110,7 @@ public class UIManager : MonoBehaviour
     public void CreateToast(string title, string text, Sprite image=null)
     {
         if(toastInstance) return;
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiToast);
         toastInstance = Instantiate(toast, transform);
         var manager = toastInstance.GetComponent<ToastManager>();
         manager.ChangeToastInfo(title, text);
@@ -123,6 +124,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenGameOverPanel()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.bgmGameOver);
         gameOverPanel.transform.localScale = new Vector3(1, 0, 1);
         gameOverPanel.SetActive(true);
         var tween = gameOverPanel.transform.DOScaleY(1, 0.2f);
@@ -139,6 +141,7 @@ public class UIManager : MonoBehaviour
     //Pause Menu
     private void OpenPauseMenu()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         GameManager.instance.GamePause(true);
         pauseMenu.SetActive(true);
     }

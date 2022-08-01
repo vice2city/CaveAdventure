@@ -54,6 +54,7 @@ public class SwitchManager : MonoBehaviour
     public void ChangeSwitchState()
     {
         isFormer = !isFormer;
+        AudioManager.instance.PlaySfx(AudioManager.instance.useSwitch);
         switch (colorGroup)
         {
             case PuzzleManager.BlockColorGroup.RedAndBlue:

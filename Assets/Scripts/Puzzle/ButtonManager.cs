@@ -13,6 +13,7 @@ public class ButtonManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.GetComponent<PlayerManager>()==null && other.GetComponent<TrunkManager>()==null) return;
+        AudioManager.instance.PlaySfx(AudioManager.instance.pressButton);
         ChangeButtonState(true);
         isPressed = true;
     }

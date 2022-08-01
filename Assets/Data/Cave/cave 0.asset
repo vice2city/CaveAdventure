@@ -18,3 +18,4 @@ MonoBehaviour:
   fireInfo: "\u65E0"
   caveGoal: 0
   sourceGoal: 0
+  caveMusic: {fileID: 8300000, guid: b4f071e7413f9ee4893529ef44e8fab8, type: 3}

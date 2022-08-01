@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     private static readonly int Speed = Animator.StringToHash("speed");
 
     private GameObject keyboardToast;
+    private static readonly int AnimSpeed = Animator.StringToHash("animSpeed");
 
     public enum TimeChangeType {Add, Replace};
 
@@ -36,6 +37,7 @@ public class PlayerManager : MonoBehaviour
         keyCount = 0;
         lightTime = initialLightTime;
         playerState = 0;
+        AudioManager.instance.PlayBGM(0);
         pauseTime = false;
         keyboardToast.SetActive(false);
     }
@@ -90,6 +92,7 @@ public class PlayerManager : MonoBehaviour
     public void ChangePlayerState(int n)
     {
         playerState = n;
+        AudioManager.instance.PlayBGM(n);
     }
 
     public void ChangeLightTime(float d, TimeChangeType t = TimeChangeType.Add)
@@ -125,6 +128,11 @@ public class PlayerManager : MonoBehaviour
         pauseTime = b;
     }
 
+    public bool IsTimePause()
+    {
+        return GameManager.instance.IsCaveFinish(playerState) || pauseTime;
+    }
+
     public void ShowKeyboardToast(string key = "E")
     {
         var text = keyboardToast.transform.Find("Button").Find("Text").gameObject;
@@ -135,5 +143,15 @@ public class PlayerManager : MonoBehaviour
     public void ShutKeyboardToast()
     {
         keyboardToast.SetActive(false);
+    }
+
+    public void StepsAudio()
+    {
+        AudioManager.instance.PlayStepsAudio();
+    }
+    
+    public void ChangeStepsAnim(float speed=1f)
+    {
+        animator.SetFloat(AnimSpeed, speed);
     }
 }

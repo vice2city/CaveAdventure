@@ -31,15 +31,21 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             var result = GameManager.instance.UseSpare();
-            if (result) controller.ChangeLightTime(spareVolume);
+            if (result)
+            {
+                AudioManager.instance.PlaySfx(AudioManager.instance.useSpare);
+                controller.ChangeLightTime(spareVolume);
+            }
         }
         
         if (GameManager.instance.IsSkillObtained(0)&&
             (Input.GetKeyDown(KeyCode.LeftShift)||Input.GetKeyDown(KeyCode.RightShift)))
             ChangeShoesState(!shoesState);
 
-        if (GameManager.instance.IsSkillObtained(1)&&Input.GetKeyDown(KeyCode.Space))
-            controller.ChangeLightTime(timeStoneVolume);
+        if (GameManager.instance.IsSkillObtained(1) && Input.GetKeyDown(KeyCode.Space))
+            if (!controller.IsTimePause() && !GameManager.instance.IsGamePause()) 
+                controller.ChangeLightTime(timeStoneVolume);
+        
         
         if (GameManager.instance.IsSkillObtained(2)&&Input.GetKeyDown(KeyCode.F))
             CreateBomb();
@@ -47,8 +53,10 @@ public class SkillManager : MonoBehaviour
     
     private void ChangeShoesState(bool state)
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.useShoes);
         shoesState = state;
         controller.moveSpeed = state ? moveSpeed*shoesSpeed : moveSpeed;
+        controller.ChangeStepsAnim(state ? 1.5f : 1f);
     }
 
     private void CreateBomb()

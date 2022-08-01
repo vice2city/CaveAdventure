@@ -14,11 +14,15 @@ public class PauseMenu : MonoBehaviour
         var button2 = transform.Find("Panel").Find("Restart").GetComponent<Button>();
         button2.onClick.AddListener(() => StartCoroutine(ReLoadScene()));
         var button3 = transform.Find("Panel").Find("Store").GetComponent<Button>();
-        button3.onClick.AddListener(() => 
-            GameObject.Find("DataManager").GetComponent<DataManager>().SaveGameData());
+        button3.onClick.AddListener(() =>
+        {
+            AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
+            GameObject.Find("DataManager").GetComponent<DataManager>().SaveGameData();
+        });
         var button4 = transform.Find("Panel").Find("Load").GetComponent<Button>();
         button4.onClick.AddListener(() =>
         {
+            AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
             GameObject.Find("DataManager").GetComponent<DataManager>().LoadGameData();
             StartCoroutine(ReLoadScene());
         });
@@ -35,6 +39,7 @@ public class PauseMenu : MonoBehaviour
     
     private IEnumerator ReLoadScene()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         UIManager.instance.OpenCover();
         GameManager.instance.GamePause(false);
         yield return new WaitForSeconds(2);
@@ -43,6 +48,7 @@ public class PauseMenu : MonoBehaviour
     
     private IEnumerator BackToMainMenu()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         UIManager.instance.OpenCover();
         yield return new WaitForSeconds(2);
         GameManager.instance.LoadScene(0);
@@ -50,6 +56,7 @@ public class PauseMenu : MonoBehaviour
     
     private void ClosePauseMenu()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         GameManager.instance.GamePause(false);
         gameObject.SetActive(false);
     }

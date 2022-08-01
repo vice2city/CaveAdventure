@@ -11,21 +11,26 @@ public class MenuManager : MonoBehaviour
     {
         if(GameManager.instance != null) Destroy(GameManager.instance.gameObject);
         if(UIManager.instance != null) Destroy(UIManager.instance.gameObject);
+        if(PuzzleManager.instance != null) Destroy(PuzzleManager.instance.gameObject);
+        AudioManager.instance.PlayBGM(AudioManager.instance.bgmBeginning);
     }
 
     public void StartGame()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         StartCoroutine(LoadScene());
     }
 
     public void LoadGame()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         GameSettings.instance.isNeedLoadData = true;
         StartCoroutine(LoadScene());
     }
 
     public void QuitGame()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         Application.Quit();
     }
 

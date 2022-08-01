@@ -42,7 +42,7 @@ public class LockedDoorManager : MonoBehaviour
         }
         var keyID = controller.UseKey();
         GameManager.instance.OpenLockedDoor(keyID, doorId);
-                
+        AudioManager.instance.PlaySfx(AudioManager.instance.openLock);
         isReady = false;
         Destroy(gameObject);
     }

@@ -57,6 +57,7 @@ public class TorchManager : MonoBehaviour
     private void ChangeTorchState()
     {
         isLit = !isLit;
+        AudioManager.instance.PlaySfx(isLit?AudioManager.instance.litTorch:AudioManager.instance.shutTorch);
         light2D.SetActive(isLit);
         anim.SetBool(IsLit, isLit);
     }

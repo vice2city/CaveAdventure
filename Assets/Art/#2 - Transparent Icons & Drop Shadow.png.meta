@@ -229,6 +229,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: plant
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 452
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ff60992aa71f35419d5abf30d9b6588
+      internalID: -1674426118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -243,6 +264,7 @@ TextureImporter:
       key: -1770648128
       box: 320583488
       bomb: 1135996530
+      plant: -1674426118
       toast: 1695830989
       timeStone: 82098351
       spare: 512416725

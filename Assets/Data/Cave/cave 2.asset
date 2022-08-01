@@ -16,5 +16,6 @@ MonoBehaviour:
   caveName: "\u4E8C\u53F7\u6D1E\u7A74"
   caveColor: {r: 0.33050075, g: 1, b: 0.3160377, a: 1}
   fireInfo: "\u7EFF\u8272\u706B\u7130"
-  caveGoal: 10
+  caveGoal: 20
   sourceGoal: 2
+  caveMusic: {fileID: 8300000, guid: f495f0d11c1ba4749b5abd1549f533a7, type: 3}

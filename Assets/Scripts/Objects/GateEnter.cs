@@ -28,6 +28,7 @@ public class GateEnter : MonoBehaviour
         if (!Input.GetKeyDown("e")) return;
         if (GameManager.instance.IsCaveFinish(destCaveID - 1 < 0 ? 0 : destCaveID - 1))
         {
+            AudioManager.instance.PlaySfx(AudioManager.instance.enterCave);
             player.transform.position = destination.transform.position;
             controller.ChangePlayerState(destCaveID);
             isReady = false;

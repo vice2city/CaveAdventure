@@ -23,6 +23,7 @@ public class KeyManager : MonoBehaviour
 
         if (player == null) return;
         player.GetKey(keyId);
+        AudioManager.instance.PlaySfx(AudioManager.instance.getKey);
         Destroy(gameObject);
     }
 }

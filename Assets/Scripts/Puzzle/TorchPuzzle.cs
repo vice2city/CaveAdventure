@@ -12,11 +12,13 @@ public class TorchPuzzle : MonoBehaviour
     
     private int keyGoalNum;
     private int keyNum;
+    private bool currentState;
     // Start is called before the first frame update
     private void Start()
     {
         torches = GetComponentsInChildren<TorchManager>();
         keyGoalNum = torches.Length;
+        currentState = false;
 
         blocksImage = blocks.GetComponentsInChildren<SpriteRenderer>();
         blocksCoil = blocks.GetComponentsInChildren<BoxCollider2D>();
@@ -33,6 +35,9 @@ public class TorchPuzzle : MonoBehaviour
     //true:close block; false: open block;
     private void ChangeBlockState(bool state)
     {
+        if (state == currentState) return;
+        currentState = state;
+        if (state) StartCoroutine(AudioManager.instance.PlayPuzzleSolved());
         foreach (var block in blocksImage)
         {
             block.color = state ? new Color(0.7f, 0.7f, 0.7f) : Color.white;
