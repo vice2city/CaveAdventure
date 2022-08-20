@@ -15,5 +15,5 @@ MonoBehaviour:
   skillId: -1
   skillName: "\u71C3\u6599\u74F6"
   skillDescription: "\u88C5\u7740\u5C11\u91CF\u71C3\u6599\u7684\u73BB\u7483\u74F6\u3002<br>\u6309\u4E0B
-    Q \u8865\u5145\u71C3\u6599\u503C\u3002"
+    <sprite=\"Tips\" index=1> \u8865\u5145\u71C3\u6599\u503C\u3002"
   skillImage: {fileID: 512416725, guid: 9cb7328b574eb5e4f8bae8210275806d, type: 3}

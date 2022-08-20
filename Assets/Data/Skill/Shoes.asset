@@ -15,5 +15,5 @@ MonoBehaviour:
   skillId: 0
   skillName: "\u978B\u5B50"
   skillDescription: "\u4E00\u53CC\u8212\u9002\u7684\u978B\u5B50\u3002<br>\u6309\u4E0B
-    Shift \u5207\u6362\u5954\u8DD1\u72B6\u6001\u3002"
+    <sprite=\"Tips\" index=3> \u5207\u6362\u5954\u8DD1\u72B6\u6001\u3002"
   skillImage: {fileID: -164708653, guid: 9cb7328b574eb5e4f8bae8210275806d, type: 3}

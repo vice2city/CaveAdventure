@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillId: 1
   skillName: "\u65F6\u95F4\u77F3"
-  skillDescription: "\u67D0\u79CD\u53EA\u5B58\u5728\u4E8E\u8FD9\u4E2A\u6D1E\u7A74\u7684\u7269\u8D28\u3002<br>\u91CD\u590D\u6309\u4E0B
-    Space \u4EE5\u5EF6\u7F13\u71C3\u6599\u6D88\u8017\u3002"
+  skillDescription: "\u67D0\u79CD\u53EA\u5B58\u5728\u4E8E\u8FD9\u4E2A\u6D1E\u7A74\u7684\u7269\u8D28\u3002<br>\u91CD\u590D\u6309\u4E0B 
+    <sprite=\"Tips\" index=5> \u4EE5\u5EF6\u7F13\u71C3\u6599\u6D88\u8017\u3002"
   skillImage: {fileID: 82098351, guid: 9cb7328b574eb5e4f8bae8210275806d, type: 3}

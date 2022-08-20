@@ -136,7 +136,18 @@ public class PlayerManager : MonoBehaviour
     public void ShowKeyboardToast(string key = "E")
     {
         var text = keyboardToast.transform.Find("Button").Find("Text").gameObject;
-        text.GetComponent<TextMeshProUGUI>().text = key;
+        string tip;
+        switch (key)
+        {
+            case "E": 
+                tip = "<sprite=\"Tips\" index=2>"; 
+                break;
+            default: 
+                tip = key;
+                break;
+        }
+
+        text.GetComponent<TextMeshProUGUI>().text = tip;
         keyboardToast.SetActive(true);
     }
     

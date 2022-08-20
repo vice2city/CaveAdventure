@@ -43,7 +43,7 @@ public class SkillManager : MonoBehaviour
             ChangeShoesState(!shoesState);
 
         if (GameManager.instance.IsSkillObtained(1) && Input.GetKeyDown(KeyCode.Space))
-            if (!controller.IsTimePause() && !GameManager.instance.IsGamePause()) 
+            if (!controller.IsTimePause()) 
                 controller.ChangeLightTime(timeStoneVolume);
         
         

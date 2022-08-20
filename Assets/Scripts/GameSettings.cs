@@ -18,4 +18,5 @@ public class GameSettings : MonoBehaviour
     }
 
     public bool isNeedLoadData = false;
+    public bool isGameEnd = false;
 }
