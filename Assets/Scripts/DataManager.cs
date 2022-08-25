@@ -13,7 +13,7 @@ public class GameProcess
     public List<Vector2Int> openedBox;
     public List<Vector2Int> unlockedDoor;
     public List<Vector2Int> usedKey;
-    
+    public bool isGameEasy;
 }
 
 public class DataManager : MonoBehaviour

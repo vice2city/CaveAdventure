@@ -12,6 +12,7 @@ TagManager:
   - Source
   - Trunk
   - Switch
+  - GlobalLight
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,7 @@ using UnityEngine;
 public class SourceManager : MonoBehaviour
 {
     public float add;
+    public float addEasy;
     public Sprite sourceFull;
     public Sprite sourceEmpty;
     
@@ -73,7 +74,7 @@ public class SourceManager : MonoBehaviour
     {
         controller.ShutKeyboardToast();
         AudioManager.instance.PlaySfx(AudioManager.instance.getSource);
-        controller.ChangeLightTime(add);
+        controller.ChangeLightTime(GameManager.instance.GetGameDifficulty() ? addEasy : add);
         GameManager.instance.GetSource(caveId);
         ShutDownSource();
     }

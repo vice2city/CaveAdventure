@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class PlayerManager : MonoBehaviour
     private GameObject keyboardToast;
     private static readonly int AnimSpeed = Animator.StringToHash("animSpeed");
 
+    private Light2D globalLight;
+    private float lightIntensity;
+
     public enum TimeChangeType {Add, Replace};
 
     // Start is called before the first frame update
@@ -33,6 +37,8 @@ public class PlayerManager : MonoBehaviour
         animator = GetComponent<Animator>();
         obtainedKey = new Queue<Vector2Int>();
         keyboardToast = transform.Find("keyboardToast").gameObject;
+        globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light2D>();
+        lightIntensity = globalLight.intensity;
 
         keyCount = 0;
         lightTime = initialLightTime;
@@ -71,6 +77,7 @@ public class PlayerManager : MonoBehaviour
 
         if (GameManager.instance.IsCaveFinish(playerState) || pauseTime) return;
         lightTime -= Time.deltaTime;
+        ChangeLightIntensity();
         if (lightTime > 0) return;
         lightTime = 0.0f;
         PauseLightTime(true);
@@ -164,5 +171,11 @@ public class PlayerManager : MonoBehaviour
     public void ChangeStepsAnim(float speed=1f)
     {
         animator.SetFloat(AnimSpeed, speed);
+    }
+
+    private void ChangeLightIntensity()
+    {
+        if (lightTime > 30) return;
+        globalLight.intensity = lightIntensity / 30 * lightTime;
     }
 }

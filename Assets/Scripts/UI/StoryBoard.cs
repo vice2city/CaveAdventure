@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class StoryBoard : MonoBehaviour
@@ -9,11 +10,14 @@ public class StoryBoard : MonoBehaviour
     public Transform content;
     public GameObject text;
     public GameObject nextButton;
+    public UnityEvent boardClosed;
 
     private int index;
     private bool isMenuOpen;
+    private bool[] isOptionClicked;
     private Dialogue.Menu menu;
     private GameObject buttonInstance;
+    private GameObject menuInstance;
     private static readonly int IsOut = Animator.StringToHash("IsOut");
 
     private void Start()
@@ -47,7 +51,6 @@ public class StoryBoard : MonoBehaviour
     private void CreateDialogue()
     {
         if (index>dialogue.sentences.Length-1) return;
-        Debug.Log(index);
         var sentence = dialogue.sentences[index];
         CreateText(sentence);
         foreach (var e in sentence.events)
@@ -63,6 +66,7 @@ public class StoryBoard : MonoBehaviour
                     CreateMenu();
                     break;
                 case Dialogue.Operation.CloseMenu:
+                    isOptionClicked = null;
                     isMenuOpen = false;
                     break;
                 case Dialogue.Operation.CloseDialogue:
@@ -106,11 +110,21 @@ public class StoryBoard : MonoBehaviour
         for (var i = 0; i < menu.options.Length; i++)
         {
             var sprite = "<sprite=\"Tips\" index=" + (6 + i) + ">";
-            var option = sprite + menu.options[i].text + "<br>";
+            string option;
+            if (isOptionClicked != null && isOptionClicked[i])
+            {
+                option = sprite + "<s>" + menu.options[i].text + "</s><br>";
+            }
+            else
+            {
+                option = sprite + menu.options[i].text + "<br>";
+            }
             options += option;
         }
         var texts = textInstance.GetComponentsInChildren<TextMeshProUGUI>();
         foreach (var ui in texts) ui.text = options;
+        menuInstance = textInstance;
+        isOptionClicked ??= new bool[menu.options.Length];
         isMenuOpen = true;
     }
 
@@ -118,14 +132,17 @@ public class StoryBoard : MonoBehaviour
     {
         if (i < 0) return;
         index = menu.options[i].nextSentence;
+        isOptionClicked[i] = true;
         isMenuOpen = false;
+        Destroy(menuInstance);
         CreateDialogue();
     }
 
     private IEnumerator ShutDownBoard()
     {
         GetComponent<Animator>().SetBool(IsOut, true);
-        yield return new WaitForSeconds(1);
-        Destroy(gameObject);   
+        yield return new WaitForSeconds(0.5f);
+        boardClosed.Invoke();
+        Destroy(gameObject);
     }
 }

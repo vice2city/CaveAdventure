@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1032e8842644e19428e4ed93c21aa3f6, type: 3}
+  m_Name: dialogue 4-5
+  m_EditorClassIdentifier: 
+  sentences:
+  - text:
+    - "\u201C\u6211\u8F9C\u8D1F\u4E86\u5979\u7684\u4FE1\u4EFB\u201D"
+    - "\u3002\u3002\u3002"
+    - "\u4F60\u65E0\u8A00\u4EE5\u5BF9\u3002<br>\u4E0D\u7528\u4F60\u89E3\u91CA\u3002"
+    events:
+    - op: 3
+      opInfo: 0
+  menus: []

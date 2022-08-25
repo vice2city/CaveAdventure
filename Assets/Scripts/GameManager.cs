@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     private List<int> usedSource;       //使用过的燃料罐id列表
     
     private bool isGamePause;
+    private bool isGameEasy;
     
     private GameObject player;          //Player实例
     private PlayerManager controller;   //PlayerManager实例
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
         usedKey = new List<Vector2Int>();
         usedSource = new List<int>();
         isGamePause = false;
+        isGameEasy = false;
         if (GameSettings.instance == null || !GameSettings.instance.isNeedLoadData) return;
         GameObject.Find("DataManager").GetComponent<DataManager>().LoadGameData();
         GameSettings.instance.isNeedLoadData = false;
@@ -90,12 +92,14 @@ public class GameManager : MonoBehaviour
     //游戏回合结束
     public void GameOver()
     {
+        isGamePause = true;
         UIManager.instance.OpenCover();
         UIManager.instance.OpenGameOverPanel();
     }
 
     public void ReloadScene()
     {
+        isGamePause = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -109,6 +113,7 @@ public class GameManager : MonoBehaviour
             openedBox = openedBox,
             unlockedDoor = unlockedDoor,
             usedKey = usedKey,
+            isGameEasy = isGameEasy
         };
         return process;
     }
@@ -121,6 +126,7 @@ public class GameManager : MonoBehaviour
         openedBox = data.openedBox;
         unlockedDoor = data.unlockedDoor;
         usedKey = data.usedKey;
+        isGameEasy = data.isGameEasy;
     }
 
     public void LoadScene(int index)
@@ -200,6 +206,16 @@ public class GameManager : MonoBehaviour
         if (spareNum <= 0) return false;
         spareNum--;
         return true;
+    }
+
+    public bool GetGameDifficulty()
+    {
+        return isGameEasy;
+    }
+    
+    public void ChangeGameDifficulty()
+    {
+        isGameEasy = !isGameEasy;
     }
 
 }

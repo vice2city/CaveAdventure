@@ -50,12 +50,13 @@ public class UIManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         pauseMenu.SetActive(false);
         lightTimeGoalHandle.gameObject.SetActive(false);
+        Cursor.visible = false;
     }
     
     private void Update()
     {
-        if (toastInstance) return;
-        if (!Input.GetKeyDown(KeyCode.Escape)) return; 
+        if (GameManager.instance.IsGamePause()) return;
+        if (!Input.GetKeyDown(KeyCode.Escape)) return;  
         if (!pauseMenu.activeSelf) OpenPauseMenu();
     }
 
@@ -144,6 +145,7 @@ public class UIManager : MonoBehaviour
         AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         GameManager.instance.GamePause(true);
         pauseMenu.SetActive(true);
+        Cursor.visible = true;
     }
     
 }

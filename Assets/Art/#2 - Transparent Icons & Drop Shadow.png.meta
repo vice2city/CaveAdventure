@@ -238,7 +238,7 @@ TextureImporter:
         width: 30
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -246,6 +246,27 @@ TextureImporter:
       bones: []
       spriteID: 9ff60992aa71f35419d5abf30d9b6588
       internalID: -1674426118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: board
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 835
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ca5589992267c94fbf20b48d5519d2a
+      internalID: -1704688109
       vertices: []
       indices: 
       edges: []
@@ -269,6 +290,7 @@ TextureImporter:
       timeStone: 82098351
       spare: 512416725
       shoes: -164708653
+      board: -1704688109
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
