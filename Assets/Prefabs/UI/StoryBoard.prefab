@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd1aba464bb69c4287f18853be8c563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scroller: {fileID: 8391232879488854575}
   dialogue: {fileID: 11400000, guid: a54ffa5e7c233b84389d60a047f05b04, type: 2}
   content: {fileID: 5197879947786868520}
   text: {fileID: 434059599738961540, guid: 947eaa48c0d477d47b9a4c77306c375e, type: 3}
@@ -625,7 +626,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 2356621234917888038}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 8391232879488854575}

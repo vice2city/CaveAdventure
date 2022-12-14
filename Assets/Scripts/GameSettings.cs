@@ -8,6 +8,7 @@ public class GameSettings : MonoBehaviour
     public static GameSettings instance;
     private void Awake()
     {
+        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
         if (instance != null)
         {
             Destroy(gameObject);

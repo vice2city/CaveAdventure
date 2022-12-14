@@ -34,6 +34,8 @@ public class Board : MonoBehaviour
 
     private void OpenStoryBoard()
     {
+        controller.ShutKeyboardToast();
+        isReady = false;
         var instance = Instantiate(storyBoard, UIManager.instance.transform);
         instance.SetActive(false);
         board = instance.GetComponent<StoryBoard>();
@@ -48,11 +50,14 @@ public class Board : MonoBehaviour
 
     protected virtual void BoardClosed()
     {
+        controller.ShowKeyboardToast();
+        isReady = true;
         board.gameObject.SetActive(false);
         DOTween.To(() => globalLight.intensity, x => globalLight.intensity = x, 
             lightIntensity, 1f);
         GameManager.instance.GamePause(false);
         tween.Kill();
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
     }
     
     private void OnTriggerEnter2D(Collider2D collision)

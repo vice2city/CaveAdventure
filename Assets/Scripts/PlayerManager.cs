@@ -51,7 +51,13 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (GameManager.instance.IsGamePause()) return;
+        if (GameManager.instance.IsGamePause())
+        {
+            // animator.SetFloat(MoveX, 0);
+            // animator.SetFloat(MoveY, 0);
+            animator.SetFloat(Speed, 0);
+            return;
+        }
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
 
@@ -74,10 +80,9 @@ public class PlayerManager : MonoBehaviour
         position.y += moveSpeed.y * movement.y * Time.deltaTime;
 
         rigidbody2d.MovePosition(position);
-
+        ChangeLightIntensity();
         if (GameManager.instance.IsCaveFinish(playerState) || pauseTime) return;
         lightTime -= Time.deltaTime;
-        ChangeLightIntensity();
         if (lightTime > 0) return;
         lightTime = 0.0f;
         PauseLightTime(true);
@@ -175,7 +180,7 @@ public class PlayerManager : MonoBehaviour
 
     private void ChangeLightIntensity()
     {
-        if (lightTime > 30) return;
+        if (lightTime > 30) globalLight.intensity = lightIntensity;
         globalLight.intensity = lightIntensity / 30 * lightTime;
     }
 }

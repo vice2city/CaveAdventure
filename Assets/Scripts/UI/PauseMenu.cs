@@ -69,6 +69,7 @@ public class PauseMenu : MonoBehaviour
 
     private void SwitchGameDifficulty()
     {
+        AudioManager.instance.PlaySfx(AudioManager.instance.uiButtonClick);
         GameManager.instance.ChangeGameDifficulty();
     }
 

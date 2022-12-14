@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class StoryBoard : MonoBehaviour
 {
+    public Scrollbar scroller;
     public Dialogue dialogue;
     public Transform content;
     public GameObject text;
@@ -29,6 +30,18 @@ public class StoryBoard : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            scroller.value += 0.01f;
+            if (scroller.value > 1) scroller.value = 1;
+        }
+        
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            scroller.value -= 0.01f;
+            if (scroller.value < 0) scroller.value = 0;
+        }
+
         if (isMenuOpen)
         {
             var i = -1;

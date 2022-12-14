@@ -130,6 +130,7 @@ public class UIManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         var tween = gameOverPanel.transform.DOScaleY(1, 0.2f);
         tween.SetAutoKill(true);
+        Cursor.visible = true;
     }
 
     public void CloseGameOverPanel()
@@ -137,6 +138,7 @@ public class UIManager : MonoBehaviour
         var tween = gameOverPanel.transform.DOScaleY(0, 0.2f);
         tween.OnComplete(GameManager.instance.ReloadScene);
         tween.SetAutoKill(true);
+        Cursor.visible = false;
     }
 
     //Pause Menu
