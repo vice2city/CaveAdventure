@@ -1,4 +1,4 @@
-# caveAdventure
+# CaveAdventure
 
 > powered by Unity
 
